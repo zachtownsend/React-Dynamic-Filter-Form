@@ -130,18 +130,13 @@ class App extends Component {
   };
 
   onLinkedInputChange = (selectedID) => {
-    let currentModel = this.state.models.find(function(model){
-      return model.id === selectedID
-    });
-
     this.setState({
-      selectedModel: selectedID,
-      currentModel: currentModel
+      selectedModel: selectedID
     });
   }
 
   render() {
-    let currentModel = this.state.models.find((model) => {
+    let model = this.state.models.find((model) => {
       return model.id === this.state.selectedModel
     });
 
@@ -153,7 +148,7 @@ class App extends Component {
           models={this.state.models}
           onChange={this.onLinkedInputChange} 
         />
-        <p>{currentModel ? 'You have selected ' + currentModel.name : 'Nothing selected'}</p>
+        <p>{model ? 'You have selected ' + model.name : 'Nothing selected'}</p>
       </div>
       
     );
