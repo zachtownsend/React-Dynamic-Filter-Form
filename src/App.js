@@ -5,7 +5,6 @@ import './App.css';
 class App extends Component {
   state = {
     selectedModel: 1,
-    currentModel: false,
     models: [
       {
         "id": 1,
@@ -142,6 +141,10 @@ class App extends Component {
   }
 
   render() {
+    let currentModel = this.state.models.find((model) => {
+      return model.id === this.state.selectedModel
+    });
+
     return (
       <div style={{textAlign: 'center'}}>
         <h1>Hello World!!!</h1>
@@ -150,7 +153,7 @@ class App extends Component {
           models={this.state.models}
           onChange={this.onLinkedInputChange} 
         />
-        <p>{this.state.currentModel ? 'You have selected ' + this.state.currentModel.name : 'Nothing selected'}</p>
+        <p>{currentModel ? 'You have selected ' + currentModel.name : 'Nothing selected'}</p>
       </div>
       
     );
