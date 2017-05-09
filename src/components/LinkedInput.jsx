@@ -5,7 +5,7 @@ import 'react-select/dist/react-select.css';
 class LinkedInput extends Component {
 
 	state = {
-		selectedParent: 1,
+		selectedParent: false,
 		selectedChild: false,
 		selectedID: 1
 	}
@@ -66,6 +66,7 @@ class LinkedInput extends Component {
 	}
 
 	render() {
+		console.log(this.props.parentPlaceholder);
 		return (
 			<div>
 				<Select 
@@ -73,6 +74,7 @@ class LinkedInput extends Component {
 					value={this.state.selectedParent}
 					options={this.getParents()}
 					onChange={this.onParentChange}
+					placeholer={this.props.parentPlaceholder}
 				/>
 
 				<Select 
@@ -80,6 +82,7 @@ class LinkedInput extends Component {
 					value={this.state.selectedChild}
 					options={this.getChildren()}
 					onChange={this.onChildChange}
+					placeholer={this.props.childPlaceholder}
 				/>
 			</div>
 		);

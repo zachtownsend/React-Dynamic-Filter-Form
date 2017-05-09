@@ -47,7 +47,9 @@ class App extends Component {
         <LinkedInput 
           name="models"
           models={this.state.models}
-          onChange={this.onLinkedInputChange} 
+          onChange={this.onLinkedInputChange}
+          parentPlaceholder={"Make"}
+          childPlaceholder={"Model"}
         />
         <p>{model ? 'You have selected ' + model.name : 'Nothing selected'}</p>
         <Select
