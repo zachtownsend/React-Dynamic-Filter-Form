@@ -74,7 +74,7 @@ class LinkedInput extends Component {
 					value={this.state.selectedParent}
 					options={this.getParents()}
 					onChange={this.onParentChange}
-					placeholer={this.props.parentPlaceholder}
+					placeholder={this.props.parentPlaceholder}
 				/>
 
 				<Select 
@@ -82,7 +82,7 @@ class LinkedInput extends Component {
 					value={this.state.selectedChild}
 					options={this.getChildren()}
 					onChange={this.onChildChange}
-					placeholer={this.props.childPlaceholder}
+					placeholder={this.props.childPlaceholder}
 				/>
 			</div>
 		);

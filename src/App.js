@@ -48,8 +48,8 @@ class App extends Component {
           name="models"
           models={this.state.models}
           onChange={this.onLinkedInputChange}
-          parentPlaceholder={"Make"}
-          childPlaceholder={"Model"}
+          parentPlaceholder={"Select Make ..."}
+          childPlaceholder={"Select Model ..."}
         />
         <p>{model ? 'You have selected ' + model.name : 'Nothing selected'}</p>
         <Select
@@ -58,6 +58,7 @@ class App extends Component {
           options={this.state.lengths}
           onChange={this.onLengthChange}
           disabled={this.state.childModelSelected}
+          placeholder="Select Lengths ..."
         />
       </div>
       
