@@ -8,7 +8,7 @@ class App extends Component {
   
 
   state = {
-    selectedModel: 1,
+    selectedModel: false,
     childModelSelected: false,
     selectedLength: false
   };

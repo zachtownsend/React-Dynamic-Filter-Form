@@ -66,7 +66,6 @@ class LinkedInput extends Component {
 	}
 
 	render() {
-		console.log(this.props.parentPlaceholder);
 		return (
 			<div>
 				<Select 
