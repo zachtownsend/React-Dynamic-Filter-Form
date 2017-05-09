@@ -43,9 +43,9 @@ class LinkedInput extends Component {
 	onParentChange = e => {
 		let change = e === null ?
 			{
-				selectedParent: 0,
+				selectedParent: false,
 				selectedChild: false,
-				selectedID: 0
+				selectedID: false
 			} :
 			{
 				selectedParent: parseInt(e.value, 10),
@@ -57,7 +57,12 @@ class LinkedInput extends Component {
 	}
 
 	onChildChange = e => {
-		let change = {
+		let change = e === null ?
+		{
+			selectedChild: false,
+			selectedID: this.state.selectedParent
+		} : 
+		{
 			selectedChild: parseInt(e.value, 10),
 			selectedID: parseInt(e.value, 10)
 		}
