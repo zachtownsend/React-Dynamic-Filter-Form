@@ -10,7 +10,13 @@ class App extends Component {
   state = {
     selectedModel: false,
     childModelSelected: false,
-    selectedLength: false
+    selectedLength: false,
+    selectedPrice: false,
+    formQuery: {
+      make: false,
+      length: false,
+      price: false
+    }
   };
 
   loadData() {
@@ -22,18 +28,60 @@ class App extends Component {
     this.loadData();
   }
 
+  getSlug(id) {
+    var model = this.state.models.find(function(model){
+      return model.id === id;
+    });
+    return model ? model.slug : false;
+    
+  }
+
   onLinkedInputChange = (linkedState) => {
     this.setState({
       selectedModel: linkedState.selectedID,
-      childModelSelected: typeof linkedState.selectedChild === 'number'
+      childModelSelected: typeof linkedState.selectedChild === 'number',
+      formQuery: {
+        ...this.state.formQuery,
+        make: this.getSlug(linkedState.selectedID)
+      }
     });
   }
 
   onLengthChange = (e) => {
     let value = e.value;
     this.setState({
-      selectedLength: value
+      selectedLength: value,
+      formQuery: {
+        ...this.state.formQuery,
+        length: value
+      }
     });
+  }
+
+  onPriceChange = (e) => {
+    let value = e.value;
+    this.setState({
+      selectedPrice: value,
+      formQuery: {
+        ...this.state.formQuery,
+        price: value
+      }
+    });
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    let queryString = '';
+    let formQuery = this.state.formQuery;
+    let firstRun = true;
+    for (var key in formQuery) {
+      if(formQuery[key]) {
+        let mod = firstRun ? '?' : '&';
+        queryString += `${mod}${key}=${formQuery[key]}`;
+        firstRun = false;
+      }
+    }
+    console.log(queryString);
   }
 
   render() {
@@ -42,7 +90,7 @@ class App extends Component {
     });
 
     return (
-      <div style={{textAlign: 'center'}}>
+      <form onSubmit={this.onSubmit} action="" style={{textAlign: 'center'}}>
         <h1>Hello World!!!</h1>
         <LinkedInput 
           name="models"
@@ -58,9 +106,18 @@ class App extends Component {
           options={this.state.lengths}
           onChange={this.onLengthChange}
           disabled={this.state.childModelSelected}
-          placeholder="Select Lengths ..."
+          placeholder="Select Length ..."
         />
-      </div>
+        <Select 
+          name="prices"
+          value={this.state.selectedPrice}
+          options={this.state.prices}
+          onChange={this.onPriceChange}
+          placeholder="Select Price ..."
+        />
+        <input type="hidden" value={this.state.formQuery} />
+        <button type="submit">Search</button>
+      </form>
       
     );
   }
