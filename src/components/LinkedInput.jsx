@@ -82,6 +82,7 @@ class LinkedInput extends Component {
 					options={this.getChildren()}
 					onChange={this.onChildChange}
 					placeholder={this.props.childPlaceholder}
+					disabled={!this.state.selectedParent}
 				/>
 			</div>
 		);
