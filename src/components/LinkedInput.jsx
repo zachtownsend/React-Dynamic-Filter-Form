@@ -37,7 +37,6 @@ class LinkedInput extends Component {
 	}
 
 	onChange = (state) => {
-		console.log('LinkedInput.js onChange', state);
 		this.props.onChange(state);
 	}
 
