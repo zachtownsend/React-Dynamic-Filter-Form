@@ -120,5 +120,23 @@
 				"name": "Mollit",
         "parent": 18
       }
+    ],
+    "lengths": [
+    	{
+    		"value": "0+5",
+    		"label": "0ft to 5ft"
+    	},
+    	{
+    		"value": "5+10",
+    		"label": "5ft to 10ft"
+    	},
+    	{
+    		"value": "10+15",
+    		"label": "10ft to 15ft"
+    	},
+    	{
+    		"value": "15+20",
+    		"label": "15ft to 20ft"
+    	}
     ]
 }

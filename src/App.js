@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import LinkedInput from './components/LinkedInput.jsx';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 import './App.css';
 
 class App extends Component {
@@ -7,7 +9,8 @@ class App extends Component {
 
   state = {
     selectedModel: 1,
-    childModelSelected: false
+    childModelSelected: false,
+    selectedLength: false
   };
 
   loadData() {
@@ -26,6 +29,13 @@ class App extends Component {
     });
   }
 
+  onLengthChange = (e) => {
+    let value = e.value;
+    this.setState({
+      selectedLength: value
+    });
+  }
+
   render() {
     let model = this.state.models.find((model) => {
       return model.id === this.state.selectedModel
@@ -40,6 +50,13 @@ class App extends Component {
           onChange={this.onLinkedInputChange} 
         />
         <p>{model ? 'You have selected ' + model.name : 'Nothing selected'}</p>
+        <Select
+          name="lengths"
+          value={this.state.childModelSelected ? false : this.state.selectedLength}
+          options={this.state.lengths}
+          onChange={this.onLengthChange}
+          disabled={this.state.childModelSelected}
+        />
       </div>
       
     );
