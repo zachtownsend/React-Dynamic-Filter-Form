@@ -13,7 +13,7 @@ class App extends Component {
     selectedLength: false,
     selectedPrice: false,
     formQuery: {
-      make: false,
+      model: false,
       length: false,
       price: false
     }
@@ -42,7 +42,7 @@ class App extends Component {
       childModelSelected: typeof linkedState.selectedChild === 'number',
       formQuery: {
         ...this.state.formQuery,
-        make: this.getSlug(linkedState.selectedID)
+        model: this.getSlug(linkedState.selectedID)
       }
     });
   }
@@ -81,7 +81,7 @@ class App extends Component {
         firstRun = false;
       }
     }
-    console.log(queryString);
+    window.location = `http://www.sunseekerbrokerage.com/search/${queryString}`;
   }
 
   render() {
@@ -90,7 +90,7 @@ class App extends Component {
     });
 
     return (
-      <form onSubmit={this.onSubmit} action="" style={{textAlign: 'center'}}>
+      <form onSubmit={this.onSubmit} action="?make=id&price=500000+1000000" style={{textAlign: 'center'}}>
         <h1>Hello World!!!</h1>
         <LinkedInput 
           name="models"
