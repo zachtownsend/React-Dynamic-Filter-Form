@@ -36,35 +36,34 @@ class LinkedInput extends Component {
 		return children;
 	}
 
-	onChange = (id) => {
-		this.props.onChange(id);
+	onChange = (state) => {
+		console.log('LinkedInput.js onChange', state);
+		this.props.onChange(state);
 	}
 
 	onParentChange = e => {
-		if (e === null) {
-			this.setState({
+		let change = e === null ?
+			{
 				selectedParent: 0,
 				selectedChild: false,
 				selectedID: 0
-			});
-			this.onChange(0);
-		} else {
-			this.setState({
+			} :
+			{
 				selectedParent: parseInt(e.value, 10),
 				selectedChild: false,
 				selectedID: parseInt(e.value, 10)
-			});
-			this.onChange(parseInt(e.value, 10));
-		}
-		
+			};
+		this.setState(change);
+		this.onChange(change);
 	}
 
 	onChildChange = e => {
-		this.setState({
+		let change = {
 			selectedChild: parseInt(e.value, 10),
 			selectedID: parseInt(e.value, 10)
-		});
-		this.onChange(parseInt(e.value, 10));
+		}
+		this.setState(change);
+		this.onChange(change);
 	}
 
 	render() {
