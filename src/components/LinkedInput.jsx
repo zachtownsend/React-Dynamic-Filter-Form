@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 class LinkedInput extends Component {
 
@@ -10,16 +11,28 @@ class LinkedInput extends Component {
 	}
 
 	getParents = () => {
-		let parents = this.props.models.filter(function(el){
-			return el.parent === 0;
-		});
+		let parents = [];
+		for (var i = this.props.models.length - 1; i >= 0; i--) {
+			if(this.props.models[i].parent === 0) {
+				parents.push({
+					value: this.props.models[i].id,
+					label: this.props.models[i].name
+				});
+			}
+		}
 		return parents;
 	}
 
 	getChildren = () => {
-		let children = this.props.models.filter(function(el){
-			return parseInt(this.state.selectedParent, 10) === parseInt(el.parent, 10);
-		}.bind(this));
+		let children = [];
+		for (var i = this.props.models.length - 1; i >= 0; i--) {
+			if(parseInt(this.state.selectedParent, 10) === parseInt(this.props.models[i].parent, 10)) {
+				children.push({
+					value: this.props.models[i].id,
+					label: this.props.models[i].name
+				});
+			}
+		}
 		return children;
 	}
 
@@ -28,68 +41,51 @@ class LinkedInput extends Component {
 	}
 
 	onParentChange = e => {
-		let value = e.target.value;
-		this.setState({
-			selectedParent: parseInt(value, 10),
-			selectedChild: false,
-			selectedID: parseInt(value, 10)
-		});
-		this.onChange(parseInt(value, 10));
+		if (e === null) {
+			this.setState({
+				selectedParent: 0,
+				selectedChild: false,
+				selectedID: 0
+			});
+			this.onChange(0);
+		} else {
+			this.setState({
+				selectedParent: parseInt(e.value, 10),
+				selectedChild: false,
+				selectedID: parseInt(e.value, 10)
+			});
+			this.onChange(parseInt(e.value, 10));
+		}
+		
 	}
 
 	onChildChange = e => {
-		let value = e.target.value;
 		this.setState({
-			selectedChild: parseInt(value, 10),
-			selectedID: parseInt(value, 10)
+			selectedChild: parseInt(e.value, 10),
+			selectedID: parseInt(e.value, 10)
 		});
-		this.onChange(parseInt(value, 10));
+		this.onChange(parseInt(e.value, 10));
 	}
 
 	render() {
 		return (
 			<div>
-				<select name="parent" onChange={this.onParentChange} value={this.state.selectedParent}>
-					{
-						this.getParents().map(function(elem, i) {
-							return (
-								<option key={elem.id} value={elem.id}>{elem.name}</option>
-							);
-						})
-					}
-				</select>
+				<Select 
+					name="parent"
+					value={this.state.selectedParent}
+					options={this.getParents()}
+					onChange={this.onParentChange}
+				/>
 
-				<select name="child" onChange={this.onChildChange} value={this.state.selectedChild}>
-					<option value="0">--Please Select--</option>
-					{
-						this.getChildren().map(function(elem, i) {
-							return (
-								<option key={elem.id} value={elem.id}>{elem.name}</option>
-							);
-						})
-					}
-				</select>
-				
+				<Select 
+					name="child"
+					value={this.state.selectedChild}
+					options={this.getChildren()}
+					onChange={this.onChildChange}
+				/>
 			</div>
 		);
 	}
 }
-
-// const LinkedInput = (props) => {
-// 	console.log(props);
-// 	return (
-// 		<select name={props.name}>
-// 			{props.models.map(function(elem, i) {
-// 				return (
-// 					<option key={elem.id} value={elem.slug}>{elem.name}</option>
-// 				);
-// 			})}
-// 		</select>
-// 	);
-// }
-
-// LinkedInput.propTypes = {
-// 	models: PropTypes.array
-// };
 
 export default LinkedInput;
