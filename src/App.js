@@ -20,7 +20,7 @@ class App extends Component {
   };
 
   loadData() {
-    var data = require('./data.json');
+    let data = require('./data.json');
     Object.assign(this.state, data);
   }
 
@@ -29,7 +29,7 @@ class App extends Component {
   }
 
   getSlug(id) {
-    var model = this.state.models.find(function(model){
+    let model = this.state.models.find(function(model){
       return model.id === id;
     });
     return model ? model.slug : false;
@@ -37,9 +37,11 @@ class App extends Component {
   }
 
   onLinkedInputChange = (linkedState) => {
+    let childSelected = typeof linkedState.selectedChild === 'number';
     this.setState({
       selectedModel: linkedState.selectedID,
-      childModelSelected: typeof linkedState.selectedChild === 'number',
+      childModelSelected: childSelected,
+      selectedLength: childSelected ? false : this.state.selectedLength,
       formQuery: {
         ...this.state.formQuery,
         model: this.getSlug(linkedState.selectedID)
@@ -90,7 +92,7 @@ class App extends Component {
     });
 
     return (
-      <form onSubmit={this.onSubmit} action="?make=id&price=500000+1000000" style={{textAlign: 'center'}}>
+      <form onSubmit={this.onSubmit} action="" style={{textAlign: 'center'}}>
         <h1>Hello World!!!</h1>
         <LinkedInput 
           name="models"
@@ -99,7 +101,6 @@ class App extends Component {
           parentPlaceholder={"Select Make ..."}
           childPlaceholder={"Select Model ..."}
         />
-        <p>{model ? 'You have selected ' + model.name : 'Nothing selected'}</p>
         <Select
           name="lengths"
           value={this.state.childModelSelected ? false : this.state.selectedLength}
@@ -117,6 +118,7 @@ class App extends Component {
         />
         <input type="hidden" value={this.state.formQuery} />
         <button type="submit">Search</button>
+        <p>{model ? 'You have selected ' + model.name : 'Nothing selected'}</p>
       </form>
       
     );
