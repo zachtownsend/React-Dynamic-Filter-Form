@@ -5,7 +5,7 @@ import 'react-select/dist/react-select.css';
 class LinkedInput extends Component {
 
 	state = {
-		selectedParent: 1,
+		selectedParent: false,
 		selectedChild: false,
 		selectedID: 1
 	}
@@ -43,9 +43,9 @@ class LinkedInput extends Component {
 	onParentChange = e => {
 		let change = e === null ?
 			{
-				selectedParent: 0,
+				selectedParent: false,
 				selectedChild: false,
-				selectedID: 0
+				selectedID: false
 			} :
 			{
 				selectedParent: parseInt(e.value, 10),
@@ -57,7 +57,12 @@ class LinkedInput extends Component {
 	}
 
 	onChildChange = e => {
-		let change = {
+		let change = e === null ?
+		{
+			selectedChild: false,
+			selectedID: this.state.selectedParent
+		} : 
+		{
 			selectedChild: parseInt(e.value, 10),
 			selectedID: parseInt(e.value, 10)
 		}
@@ -73,6 +78,7 @@ class LinkedInput extends Component {
 					value={this.state.selectedParent}
 					options={this.getParents()}
 					onChange={this.onParentChange}
+					placeholder={this.props.parentPlaceholder}
 				/>
 
 				<Select 
@@ -80,6 +86,8 @@ class LinkedInput extends Component {
 					value={this.state.selectedChild}
 					options={this.getChildren()}
 					onChange={this.onChildChange}
+					placeholder={this.props.childPlaceholder}
+					disabled={!this.state.selectedParent}
 				/>
 			</div>
 		);
